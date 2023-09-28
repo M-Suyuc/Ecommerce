@@ -1,16 +1,10 @@
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { fetchCategory } from '../../../features/categorySlice'
 
 export function MobileNavigation () {
-  const dispatch = useDispatch()
   const [navbar, setNavbar] = useState(false)
   const categories = useSelector((state) => state.category.categories)
-
-  useEffect(() => {
-    dispatch(fetchCategory())
-  }, [dispatch])
 
   const handleClick = () => {
     setNavbar(!navbar)
@@ -18,7 +12,6 @@ export function MobileNavigation () {
 
   return (
     <>
-      {/* Button amburguer */}
       <button
         className='inline-block lg:hidden'
         onClick={handleClick}

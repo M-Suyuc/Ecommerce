@@ -6,7 +6,11 @@ import { useSelector } from 'react-redux'
 
 const Navbar = () => {
   const products = useSelector((state) => state.cart.productList)
-  const longProducts = products?.length
+
+  const longProducts = products.reduce((acumulador, currentvalue) => {
+    acumulador += currentvalue.quantity
+    return acumulador
+  }, 0)
 
   return (
     <header className=''>
@@ -14,7 +18,9 @@ const Navbar = () => {
         <nav className='py-3 md:py-4 px-6 lg:px-0 '>
           <div className='flex justify-between items-start'>
             <div className='flex items-end gap-[2px] grow lg:grow-0'>
+              {/* menu de caltegotrias en mobile */}
               <MobileNavigation />
+              {/* ------- */}
               <Link to='/' className='flex-grow inline-flex justify-center'>
                 <div className=''>
                   <h1 className='text-xl lg:text-2xl font-bold bg-blue-600 text-white py-1 px-4 rounded-tl-2xl rounded-br-2xl'>MARLOS'TORE</h1>

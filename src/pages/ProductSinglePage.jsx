@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { fetchSingleProduct } from '../features/productSlice'
 import { STATUS } from '../utils/status'
 import { Container } from '../componets/container/Cotainer'
 import { addCart } from '../features/cartSlice'
+import { useStore } from '../hooks/useStore'
 
 const ProductSinglePage = () => {
   const dispatch = useDispatch()
@@ -18,6 +18,7 @@ const ProductSinglePage = () => {
 
   const { images, title, description, brand, price, rating, category } = singleProduct
   const [showMessage, setShowMessage] = useState(false)
+  const { fetchOnlyProduct } = useStore()
 
   const Increment = () => {
     setQty((prevQty) => {
@@ -42,12 +43,11 @@ const ProductSinglePage = () => {
 
     setTimeout(() => {
       setShowMessage(false)
-    }, 800)
+    }, 600)
   }
 
   useEffect(() => {
-    dispatch(fetchSingleProduct(id))
-    // console.log('fetchSingleProduct')
+    fetchOnlyProduct({ id })
   }, [id])
 
   function Message () {

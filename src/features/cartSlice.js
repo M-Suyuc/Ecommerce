@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 function ShowLocalStorage () {
-  const cart = localStorage.getItem('cart')
+  const cart = window.localStorage.getItem('cart')
   if (cart) {
-    return JSON.parse(localStorage.getItem('cart'))
+    return JSON.parse(window.localStorage.getItem('cart'))
   } else {
     return []
   }
 }
 
 function LocalStorage (params) {
-  localStorage.setItem('cart', JSON.stringify(params))
+  window.localStorage.setItem('cart', JSON.stringify(params))
 }
 
 const initialState = {
@@ -94,12 +94,18 @@ export const cartSlice = createSlice({
         acumulador += currentvalue.totalPrice
         return acumulador
       }, 0)
-      state.productsCount = state.productList.length
+    },
+
+    getProductsCart: (state) => {
+      state.productsCount = state.productList.reduce((acumulador, currentvalue) => {
+        acumulador += currentvalue.quantity
+        return acumulador
+      }, 0)
     }
 
   }
 })
 
-export const { addCart, toggleCartQty, clearCart, DeleteProduct, getCartTotal } = cartSlice.actions
+export const { addCart, toggleCartQty, clearCart, DeleteProduct, getCartTotal, getProductsCart } = cartSlice.actions
 
 export default cartSlice.reducer
